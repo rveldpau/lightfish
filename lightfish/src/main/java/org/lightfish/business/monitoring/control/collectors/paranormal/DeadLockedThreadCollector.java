@@ -5,13 +5,13 @@ import java.util.logging.Logger;
 import org.codehaus.jettison.json.JSONException;
 import org.lightfish.business.monitoring.control.collectors.AbstractRestDataCollector;
 import org.lightfish.business.monitoring.control.collectors.DataPoint;
-import org.lightfish.business.monitoring.control.collectors.SnapshotDataCollector;
+import org.lightfish.business.SnapshotData;
 
 /**
  *
  * @author Rob Veldpaus
  */
-@SnapshotDataCollector
+@SnapshotData
 public class DeadLockedThreadCollector extends AbstractRestDataCollector<String> {
     
     

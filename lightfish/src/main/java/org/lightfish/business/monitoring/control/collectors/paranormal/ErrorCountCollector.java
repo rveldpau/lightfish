@@ -3,13 +3,13 @@ package org.lightfish.business.monitoring.control.collectors.paranormal;
 import org.lightfish.business.monitoring.control.collectors.jvm.*;
 import org.lightfish.business.monitoring.control.collectors.AbstractRestDataCollector;
 import org.lightfish.business.monitoring.control.collectors.DataPoint;
-import org.lightfish.business.monitoring.control.collectors.SnapshotDataCollector;
+import org.lightfish.business.SnapshotData;
 
 /**
  *
  * @author Rob Veldpaus
  */
-@SnapshotDataCollector
+@SnapshotData
 public class ErrorCountCollector extends AbstractRestDataCollector<Integer> {
     
     public static final String ERROR_COUNT_URI = "http-service/server/request/errorcount";

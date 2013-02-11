@@ -34,7 +34,7 @@ import org.lightfish.presentation.publication.BrowserWindow;
 @WebServlet(name = "CometEscalator", urlPatterns = {"/escalations/*"}, asyncSupported = true)
 public class CometEscalator extends HttpServlet {
 
-    @Inject @EscalationWindow
+    @Inject @EscalationData
     Event<BrowserWindow> events;
     private final static Logger LOG = Logger.getLogger(CometEscalator.class.getName());
 

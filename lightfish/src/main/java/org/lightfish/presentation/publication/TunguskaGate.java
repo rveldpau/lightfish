@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
+import org.lightfish.business.SnapshotData;
 
 /**
  *
@@ -33,7 +34,7 @@ import java.util.logging.Logger;
 @WebServlet(name = "TunguskaGate", urlPatterns = {"/live"}, asyncSupported = true)
 public class TunguskaGate extends HttpServlet {
 
-    @Inject
+    @Inject @SnapshotData
     Event<BrowserWindow> events;
     private final static Logger LOG = Logger.getLogger(TunguskaGate.class.getName());
 

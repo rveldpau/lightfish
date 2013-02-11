@@ -32,7 +32,7 @@ import org.lightfish.business.monitoring.control.collectors.DataPoint;
 import org.lightfish.business.monitoring.control.collectors.DataPointToSnapshotMapper;
 import org.lightfish.business.monitoring.control.collectors.ParallelDataCollectionAction;
 import org.lightfish.business.monitoring.control.collectors.ParallelDataCollectionActionBehaviour;
-import org.lightfish.business.monitoring.control.collectors.SnapshotDataCollector;
+import org.lightfish.business.SnapshotData;
 
 /**
  * @author Adam Bien, blog.adam-bien.com / Rob Veldpaus
@@ -55,7 +55,7 @@ public class SnapshotProvider {
     @Inject
     Instance<GlassfishAuthenticator> authenticator;
     @Inject
-    @SnapshotDataCollector
+    @SnapshotData
     Instance<DataCollector> dataCollectors;
     @Inject
     DataPointToSnapshotMapper mapper;
@@ -80,7 +80,7 @@ public class SnapshotProvider {
         }
         
         long elapsed = new Date().getTime() - start.getTime();
-        LOG.fine("Data collection took " + elapsed);
+        LOG.info("Data collection took " + elapsed);
         
         return snapshot;
 

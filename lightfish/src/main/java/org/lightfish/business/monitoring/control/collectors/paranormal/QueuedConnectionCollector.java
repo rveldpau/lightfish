@@ -2,13 +2,13 @@ package org.lightfish.business.monitoring.control.collectors.paranormal;
 
 import org.lightfish.business.monitoring.control.collectors.AbstractRestDataCollector;
 import org.lightfish.business.monitoring.control.collectors.DataPoint;
-import org.lightfish.business.monitoring.control.collectors.SnapshotDataCollector;
+import org.lightfish.business.SnapshotData;
 
 /**
  *
  * @author Rob Veldpaus
  */
-@SnapshotDataCollector
+@SnapshotData
 public class QueuedConnectionCollector extends AbstractRestDataCollector<Integer> {
     
     public static final String QUEUED_CONNS = "network/connection-queue/countqueued";

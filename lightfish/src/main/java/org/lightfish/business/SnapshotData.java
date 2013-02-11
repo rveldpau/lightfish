@@ -1,4 +1,4 @@
-package org.lightfish.business.monitoring.control.collectors;
+package org.lightfish.business;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -10,11 +10,11 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 /**
- *
+ * For anything related to snapshot data.
  * @author Rob Veldpaus
  */
 @Qualifier
 @Retention(RUNTIME)
 @Target({METHOD, FIELD, PARAMETER, TYPE})
-public @interface SnapshotDataCollector {
+public @interface SnapshotData {
 }

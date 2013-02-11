@@ -2,13 +2,13 @@ package org.lightfish.business.monitoring.control.collectors.transactions;
 
 import org.lightfish.business.monitoring.control.collectors.AbstractRestDataCollector;
 import org.lightfish.business.monitoring.control.collectors.DataPoint;
-import org.lightfish.business.monitoring.control.collectors.SnapshotDataCollector;
+import org.lightfish.business.SnapshotData;
 
 /**
  *
  * @author Rob Veldpaus
  */
-@SnapshotDataCollector
+@SnapshotData
 public class RolledBackTransactionsCollector extends AbstractRestDataCollector<Integer> {
     
     public static final String ROLLED_BACK_TX = "transaction-service/rolledbackcount";

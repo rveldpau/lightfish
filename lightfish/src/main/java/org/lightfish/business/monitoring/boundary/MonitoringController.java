@@ -15,7 +15,7 @@ limitations under the License.
 */
 package org.lightfish.business.monitoring.boundary;
 
-import org.lightfish.business.logging.Log;
+import java.util.Date;
 import org.lightfish.business.monitoring.control.SnapshotProvider;
 import org.lightfish.business.monitoring.entity.Snapshot;
 
@@ -34,6 +34,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,12 +43,13 @@ import java.util.List;
  */
 
 @Singleton
+@ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 @Path("snapshots")
 @Produces(MediaType.APPLICATION_JSON)
 public class MonitoringController {
     
     @Inject
-    private Log LOG;
+    private Logger LOG;
     
     @Inject
     SnapshotProvider dataProvider;
@@ -57,10 +60,14 @@ public class MonitoringController {
     @Inject @Severity(Severity.Level.HEARTBEAT)
     Event<Snapshot> heartBeat;
 
+    @Inject MonitoringAsyncGatherer gatherer;
+    
     @Resource
     TimerService timerService;
 
     private Timer timer;
+    
+    private Date lastTimeStarted = new Date();
     
     @Inject
     private Instance<Integer> interval;
@@ -72,22 +79,13 @@ public class MonitoringController {
     }
 
 
-    @Timeout
+    @Timeout 
     public void gatherAndPersist(){
-        Snapshot current;
-        try {
-            current = dataProvider.fetchSnapshot();
-        } catch (Exception ex) {
-            LOG.error("Could not retrieve snapshot",ex);
-            return;
-        }
-        em.persist(current);
-        try{
-            heartBeat.fire(current);
-        }catch(Exception e){
-            LOG.error("Cannot fire heartbeat",e);
-        }
-        LOG.info(".");
+        Date startTime = new Date();
+        long timeDifference = startTime.getTime() - lastTimeStarted.getTime();
+        LOG.fine("Elapsed time between starts = " + timeDifference);
+        lastTimeStarted = startTime;
+        gatherer.gatherAndPersist();
     }
     
     @GET
@@ -105,7 +103,7 @@ public class MonitoringController {
             try{
                 this.timer.cancel();
             }catch(Exception e){
-                LOG.error("Cannot cancel timer " + this.timer, e);
+                LOG.log(Level.WARNING, "Cannot cancel timer " + this.timer, e);
             }finally{
                 this.timer  = null;
             }

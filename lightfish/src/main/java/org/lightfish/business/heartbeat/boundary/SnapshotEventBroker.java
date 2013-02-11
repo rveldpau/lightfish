@@ -35,7 +35,8 @@ import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.enterprise.inject.Instance;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.lightfish.presentation.publication.escalation.EscalationWindow;
+import org.lightfish.business.SnapshotData;
+import org.lightfish.presentation.publication.escalation.EscalationData;
 import org.lightfish.presentation.publication.escalation.Escalations;
 
 /**
@@ -66,12 +67,12 @@ public class SnapshotEventBroker {
         this.timer = this.timerService.createCalendarTimer(expression);
     }
 
-    public void onBrowserRequest(@Observes BrowserWindow browserWindow) {
+    public void onBrowserRequest(@Observes @SnapshotData BrowserWindow browserWindow) {
         LOG.info("Added " + browserWindow.hashCode());
         browsers.add(browserWindow);
     }
-    
-    public void onEscalationBrowserRequest(@Observes @EscalationWindow BrowserWindow browserWindow) {
+
+    public void onEscalationBrowserRequest(@Observes @EscalationData BrowserWindow browserWindow) {
         escalationBrowsers.add(browserWindow);
     }
 
@@ -80,15 +81,19 @@ public class SnapshotEventBroker {
             if (browserWindow.getChannel() == null) {
                 try {
                     send(browserWindow, snapshot);
-                    LOG.info("Sent to " + browserWindow.hashCode());
+                    LOG.info("Sent to " + snapshot.getId() + " to " + browserWindow.hashCode());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 } finally {
                     browsers.remove(browserWindow);
+                    LOG.info("Removed " + browserWindow.hashCode());
                 }
             }
         }
     }
 
-    public void onNewEscalation(@Observes @Severity(Severity.Level.ESCALATION) Snapshot escalated) {
+    public void onNewEscalation(@Observes
+            @Severity(Severity.Level.ESCALATION) Snapshot escalated) {
         this.escalations.put(escalated.getEscalationChannel(), escalated);
     }
 

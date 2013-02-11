@@ -13,14 +13,14 @@ import org.lightfish.business.monitoring.control.collectors.DataCollector;
 import org.lightfish.business.monitoring.control.collectors.DataPoint;
 import org.lightfish.business.monitoring.control.collectors.ParallelDataCollectionAction;
 import org.lightfish.business.monitoring.control.collectors.ParallelDataCollectionActionBehaviour;
-import org.lightfish.business.monitoring.control.collectors.SnapshotDataCollector;
+import org.lightfish.business.SnapshotData;
 import org.lightfish.business.monitoring.entity.Application;
 
 /**
  *
  * @author Rob Veldpaus
  */
-@SnapshotDataCollector
+@SnapshotData
 public class ApplicationCollector extends AbstractRestDataCollector<List<Application>> {
 
     private static final String APPLICATIONS = "applications";

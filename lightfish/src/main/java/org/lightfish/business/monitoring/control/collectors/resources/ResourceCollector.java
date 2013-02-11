@@ -11,14 +11,14 @@ import org.lightfish.business.monitoring.control.collectors.DataCollector;
 import org.lightfish.business.monitoring.control.collectors.DataPoint;
 import org.lightfish.business.monitoring.control.collectors.ParallelDataCollectionAction;
 import org.lightfish.business.monitoring.control.collectors.ParallelDataCollectionActionBehaviour;
-import org.lightfish.business.monitoring.control.collectors.SnapshotDataCollector;
+import org.lightfish.business.SnapshotData;
 import org.lightfish.business.monitoring.entity.ConnectionPool;
 
 /**
  *
  * @author Rob Veldpaus
  */
-@SnapshotDataCollector
+@SnapshotData
 public class ResourceCollector extends AbstractRestDataCollector<List<ConnectionPool>> {
 
     private static final String RESOURCES = "resources";
