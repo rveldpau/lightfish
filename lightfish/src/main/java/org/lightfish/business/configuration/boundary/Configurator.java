@@ -39,19 +39,7 @@ public class Configurator {
     
     @PostConstruct
     public void initialize(){
-        this.configuration = new HashMap<>();
-        this.configuration.put("location", "localhost:4848");
-        this.configuration.put("jdbcPoolNames","SamplePool");
-        this.configuration.put("interval","2");
-        this.configuration.put("username", "");
-        this.configuration.put("password", "");
-        this.configuration.put("serverInstances", "server");
-        this.configuration.put("maxParallelThreads", "0");
-        this.configuration.put("collectionTimeout", "10");
-        this.configuration.put("dataCollectionRetries", "1");
-        
-        
-        
+        this.configuration = configurationStore.retrieveConfiguration();
     }
     
     @Produces
